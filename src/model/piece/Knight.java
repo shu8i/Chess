@@ -9,22 +9,24 @@ import static model.constants.Piece.*;
 /**
  * Created by Shahab Shekari on 12/24/14.
  */
-public class King implements Piece {
+public class Knight implements Piece {
 
     public long getValidMoves(Board board, Color color, long location)
     {
         long friendlies = board.getPiece(ALL, color),
+                clipFileAB = location & CLEAR_FILE_A & CLEAR_FILE_B,
                 clipFileA = location & CLEAR_FILE_A,
+                clipFileGH = location & CLEAR_FILE_G & CLEAR_FILE_H,
                 clipFileH = location & CLEAR_FILE_H,
 
-                spot1 = clipFileA << 7,
-                spot2 = location << 8,
-                spot3 = clipFileH << 9,
-                spot4 = clipFileH << 1,
-                spot5 = clipFileH >> 7,
-                spot6 = location >> 8,
-                spot7 = clipFileA >> 9,
-                spot8 = clipFileA >> 1,
+                spot1 = clipFileAB << 6,
+                spot2 = clipFileA << 15,
+                spot3 = clipFileH << 17,
+                spot4 = clipFileGH << 10,
+                spot5 = clipFileGH >> 6,
+                spot6 = clipFileH >> 15,
+                spot7 = clipFileA >> 17,
+                spot8 = clipFileAB >> 10,
 
                 moves = spot1 | spot2 | spot3 | spot4 |
                         spot5 | spot6 | spot7 | spot8;
