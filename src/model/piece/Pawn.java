@@ -2,19 +2,21 @@ package model.piece;
 
 import model.Board;
 import model.constants.Color;
+import model.constants.Spot;
 
 import static model.constants.Piece.*;
 import static model.constants.Color.*;
-import static model.constants.Board.*;
+import static model.constants.BitBoards.*;
 
 /**
  * Created by Shahab Shekari on 12/24/14.
  */
 public class Pawn implements Piece {
 
-    public long getValidMoves(Board board, Color color, long location)
+    public long getValidMoves(Board board, Color color, Spot spot)
     {
         long allPieces = board.getPiece(ALL, BOTH),
+                location = PIECE[spot.ordinal()],
 
                 oneStep = color.equals(WHITE) ?
                         (location << 8) & ~allPieces :

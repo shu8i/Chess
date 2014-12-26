@@ -2,8 +2,9 @@ package model.piece;
 
 import model.Board;
 import model.constants.Color;
+import model.constants.Spot;
 
-import static model.constants.Board.*;
+import static model.constants.BitBoards.*;
 import static model.constants.Piece.*;
 
 /**
@@ -11,9 +12,10 @@ import static model.constants.Piece.*;
  */
 public class Knight implements Piece {
 
-    public long getValidMoves(Board board, Color color, long location)
+    public long getValidMoves(Board board, Color color, Spot spot)
     {
         long friendlies = board.getPiece(ALL, color),
+                location = PIECE[spot.ordinal()],
                 clipFileAB = location & CLEAR_FILE_A & CLEAR_FILE_B,
                 clipFileA = location & CLEAR_FILE_A,
                 clipFileGH = location & CLEAR_FILE_G & CLEAR_FILE_H,

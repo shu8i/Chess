@@ -2,6 +2,7 @@ package model.piece;
 
 import model.Board;
 import model.constants.Color;
+import model.constants.Spot;
 
 
 /**
@@ -9,6 +10,6 @@ import model.constants.Color;
  */
 public interface Piece {
 
-    public long getValidMoves(Board board, Color color, long location);
+    public long getValidMoves(Board board, Color color, Spot spot);
 
 }
