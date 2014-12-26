@@ -1,3 +1,4 @@
+import model.BitBoardFactory;
 import model.Board;
 import model.constants.BitBoards;
 
@@ -7,10 +8,7 @@ import model.constants.BitBoards;
 public class Chess {
 
     public static void main(String[] args) {
-        Board.generateOccupancyVariations(true);
-        Board.generateOccupancyVariations(false);
-        Board.generateMoveDatabase(true);
-        Board.generateMoveDatabase(false);
+        BitBoardFactory.prepareDatabase();
         Board board = new Board();
         long test = board.test();
         Board.printBitBoard(test);
