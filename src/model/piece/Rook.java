@@ -19,11 +19,11 @@ public class Rook extends ChessPiece {
         super(color);
     }
 
-    public long getValidMoves(Board board, Spot spot)
+    public long getValidMoves(long[] positions, Spot spot)
     {
-        long blockers = board.getPiece(ALL, BOTH) & ROOK_OCC_MASK[spot.ordinal()];
+        long blockers = getPiece(positions, ALL, BOTH) & ROOK_OCC_MASK[spot.ordinal()];
         int databaseIndex = (int)((blockers * MAGIC_ROOK_NUMBER[spot.ordinal()]) >>> MAGIC_ROOK_SHIFT[spot.ordinal()]);
-        return MAGIC_ROOK_MOVE[spot.ordinal()][databaseIndex] & ~board.getPiece(ALL, color);
+        return MAGIC_ROOK_MOVE[spot.ordinal()][databaseIndex] & ~getPiece(positions, ALL, color);
     }
 
     public int getBitBoardIndex()

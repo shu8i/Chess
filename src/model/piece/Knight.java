@@ -18,9 +18,9 @@ public class Knight extends ChessPiece {
         super(color);
     }
 
-    public long getValidMoves(Board board, Spot spot)
+    public long getValidMoves(long[] positions, Spot spot)
     {
-        long friendlies = board.getPiece(ALL, color),
+        long friendlies = getPiece(positions, ALL, color),
                 location = PIECE[spot.ordinal()],
                 clipFileAB = location & CLEAR_FILE_A & CLEAR_FILE_B,
                 clipFileA = location & CLEAR_FILE_A,

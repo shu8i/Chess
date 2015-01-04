@@ -2,7 +2,10 @@ package model.piece;
 
 import model.Board;
 import model.constants.Color;
+import model.constants.Piece;
 import model.constants.Spot;
+
+import static model.constants.Piece.ALL;
 
 
 /**
@@ -15,8 +18,15 @@ public abstract class ChessPiece {
     public ChessPiece(Color color) {
         this.color = color;
     }
+
+    protected static long getPiece(long[] positions, Piece piece, Color color)
+    {
+        return piece.equals(ALL)
+                ? positions[ 12 + color.ordinal() ]
+                : positions[ color.ordinal() * 6 + piece.ordinal() ];
+    }
     
-    public abstract long getValidMoves(Board board, Spot spot);
+    public abstract long getValidMoves(long[] positions, Spot origin);
     public abstract int getBitBoardIndex();
 
 }

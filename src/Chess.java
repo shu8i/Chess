@@ -24,7 +24,7 @@ public class Chess {
         System.out.print("> ");
 
         try {
-            while ((command = br.readLine()) != null && !command.equals("exit"))
+            while (!(command = br.readLine()).equals("exit"))
             {
                 String origin = command.split(" ")[0].substring(0, 1).toUpperCase() + command.split(" ")[0].substring(1),
                         target = command.split(" ")[1].substring(0, 1).toUpperCase() + command.split(" ")[1].substring(1);

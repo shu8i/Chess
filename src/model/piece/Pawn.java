@@ -18,9 +18,9 @@ public class Pawn extends ChessPiece {
         super(color);
     }
 
-    public long getValidMoves(Board board, Spot spot)
+    public long getValidMoves(long[] positions, Spot spot)
     {
-        long allPieces = board.getPiece(ALL, BOTH),
+        long allPieces = getPiece(positions, ALL, BOTH),
                 location = PIECE[spot.ordinal()],
 
                 oneStep = color.equals(WHITE) ?
@@ -40,8 +40,8 @@ public class Pawn extends ChessPiece {
                         clipFileH << 9 : clipFileH >> 9,
                 attacks = leftAttack | rightAttack,
                 validAttacks = color.equals(WHITE) ?
-                        attacks & board.getPiece(ALL, BLACK) :
-                        attacks & board.getPiece(ALL, WHITE);
+                        attacks & getPiece(positions, ALL, BLACK) :
+                        attacks & getPiece(positions, ALL, WHITE);
 
         return moves | validAttacks;
     }

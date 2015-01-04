@@ -18,6 +18,7 @@ public class Board {
     private long[] position = POSITION;
     private ChessPiece[] board = new ChessPiece[64];
     private Color turn = WHITE;
+    public enum Status {CHECK, CHECKMATE, STALEMATE}
 
     public Board()
     {
@@ -35,7 +36,7 @@ public class Board {
             return false;
 
         //piece can actually move from origin to target.
-        if ((board[origin.ordinal()].getValidMoves(this, origin) & PIECE[target.ordinal()]) == 0)
+        if ((board[origin.ordinal()].getValidMoves(position, origin) & PIECE[target.ordinal()]) == 0)
             return false;
 
         //piece is allowed to move... update bitboards and board
@@ -51,14 +52,65 @@ public class Board {
         //change turns
         turn = turn.equals(WHITE) ? BLACK : WHITE;
 
+        if (indicateCheck()) System.out.println("Check.");
+
         return true;
     }
+
+    private boolean indicateCheck()
+    {
+        int kingIndex = turn.equals(WHITE) ? WHITE_KING : BLACK_KING;
+        Color oppositeColor = turn.equals(WHITE) ? BLACK : WHITE;
+        Spot kingPosition = Spot.values()[Long.numberOfTrailingZeros(position[kingIndex])];
+        long[] pretendPositions = position.clone();
+
+        ChessPiece piece = new King(turn);
+        long kingMoves = piece.getValidMoves(pretendPositions, kingPosition);
+        if ((kingMoves & getPiece(KING, oppositeColor)) != 0) return true;
+
+        pretendPositions[kingIndex] = 0;
+
+        pretendPositions[getPieceIndex(ROOK, turn)] ^= PIECE[kingPosition.ordinal()];
+        piece = new Rook(turn);
+        long moves = piece.getValidMoves(pretendPositions, kingPosition);
+        if ((moves & (getPiece(ROOK, oppositeColor) | getPiece(QUEEN, oppositeColor))) != 0) return true;
+
+        pretendPositions[getPieceIndex(ROOK, turn)] &= ~PIECE[kingPosition.ordinal()];
+        pretendPositions[getPieceIndex(KNIGHT, turn)] ^= PIECE[kingPosition.ordinal()];
+        piece = new Knight(turn);
+        moves = piece.getValidMoves(pretendPositions, kingPosition);
+        if ((moves & getPiece(KNIGHT, oppositeColor)) != 0) System.out.printf("Check.");
+
+        pretendPositions[getPieceIndex(KNIGHT, turn)] &= ~PIECE[kingPosition.ordinal()];
+        pretendPositions[getPieceIndex(BISHOP, turn)] ^= PIECE[kingPosition.ordinal()];
+        piece = new Bishop(turn);
+        moves = piece.getValidMoves(pretendPositions, kingPosition);
+        if ((moves & (getPiece(BISHOP, oppositeColor) | getPiece(QUEEN, oppositeColor))) != 0) return true;
+
+        pretendPositions[getPieceIndex(BISHOP, turn)] &= ~PIECE[kingPosition.ordinal()];
+        pretendPositions[getPieceIndex(PAWN, turn)] ^= PIECE[kingPosition.ordinal()];
+        piece = new Pawn(turn);
+        moves = piece.getValidMoves(pretendPositions, kingPosition);
+        if ((moves & getPiece(PAWN, oppositeColor) & getPiece(QUEEN, oppositeColor)) != 0) return true;
+
+        return false;
+
+    }
+
+
 
     public long getPiece(Piece piece, Color color)
     {
         return piece.equals(ALL)
                 ? position[ 12 + color.ordinal() ]
                 : position[ color.ordinal() * 6 + piece.ordinal() ];
+    }
+
+    public int getPieceIndex(Piece piece, Color color)
+    {
+        return piece.equals(ALL)
+                ?  12 + color.ordinal()
+                : color.ordinal() * 6 + piece.ordinal();
     }
 
     public static void printBitBoard(long bitboard)
@@ -127,8 +179,6 @@ public class Board {
         board[58] = board[61] = new Bishop(BLACK);
         board[59] = new Queen(BLACK);
         board[60] = new King(BLACK);
-
-
     }
 
 }

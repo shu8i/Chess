@@ -1,6 +1,5 @@
 package model.piece;
 
-import model.Board;
 import model.constants.Color;
 import model.constants.Spot;
 
@@ -18,11 +17,11 @@ public class Bishop extends ChessPiece {
         super(color);
     }
 
-    public long getValidMoves(Board board, Spot spot)
+    public long getValidMoves(long[] positions, Spot spot)
     {
-        long blockers = board.getPiece(ALL, BOTH) & BISHOP_OCC_MASK[spot.ordinal()];
+        long blockers = getPiece(positions, ALL, BOTH) & BISHOP_OCC_MASK[spot.ordinal()];
         int databaseIndex = (int)((blockers * MAGIC_BISHOP_NUMBER[spot.ordinal()]) >>> MAGIC_BISHOP_SHIFT[spot.ordinal()]);
-        return MAGIC_BISHOP_MOVE[spot.ordinal()][databaseIndex] & ~board.getPiece(ALL, color);
+        return MAGIC_BISHOP_MOVE[spot.ordinal()][databaseIndex] & ~getPiece(positions, ALL, color);
     }
 
     public int getBitBoardIndex()
