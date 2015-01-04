@@ -5,14 +5,20 @@ import model.constants.Color;
 import model.constants.Spot;
 
 import static model.constants.BitBoards.*;
+import static model.constants.Color.WHITE;
 import static model.constants.Piece.*;
 
 /**
  * Created by Shahab Shekari on 12/24/14.
  */
-public class King implements Piece {
+public class King extends ChessPiece {
 
-    public long getValidMoves(Board board, Color color, Spot spot)
+    public King(Color color)
+    {
+        super(color);
+    }
+
+    public long getValidMoves(Board board, Spot spot)
     {
         long friendlies = board.getPiece(ALL, color),
                 location = PIECE[spot.ordinal()],
@@ -32,6 +38,16 @@ public class King implements Piece {
                         spot5 | spot6 | spot7 | spot8;
 
         return moves & ~friendlies;
+    }
+
+    public int getBitBoardIndex()
+    {
+        return this.color.equals(WHITE) ? 5 : 11;
+    }
+
+    @Override
+    public String toString() {
+        return this.color + "K";
     }
 
 }

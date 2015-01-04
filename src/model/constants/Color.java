@@ -5,8 +5,21 @@ package model.constants;
  */
 public enum Color {
 
-    WHITE,
-    BLACK,
-    BOTH
+    WHITE("w"),
+    BLACK("b"),
+    BOTH("x");
+
+    private String abr;
+
+    private Color(String abr)
+    {
+        this.abr = abr;
+    }
+
+    @Override
+    public String toString()
+    {
+        return abr;
+    }
 
 }

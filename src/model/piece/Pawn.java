@@ -11,9 +11,14 @@ import static model.constants.BitBoards.*;
 /**
  * Created by Shahab Shekari on 12/24/14.
  */
-public class Pawn implements Piece {
+public class Pawn extends ChessPiece {
 
-    public long getValidMoves(Board board, Color color, Spot spot)
+    public Pawn(Color color)
+    {
+        super(color);
+    }
+
+    public long getValidMoves(Board board, Spot spot)
     {
         long allPieces = board.getPiece(ALL, BOTH),
                 location = PIECE[spot.ordinal()],
@@ -39,6 +44,16 @@ public class Pawn implements Piece {
                         attacks & board.getPiece(ALL, WHITE);
 
         return moves | validAttacks;
+    }
+
+    public int getBitBoardIndex()
+    {
+        return this.color.equals(WHITE) ? 0 : 6;
+    }
+
+    @Override
+    public String toString() {
+        return this.color + "P";
     }
 
 }

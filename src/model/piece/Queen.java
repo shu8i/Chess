@@ -11,9 +11,14 @@ import static model.constants.Piece.*;
 /**
  * Created by Shahab Shekari on 12/25/14.
  */
-public class Queen implements Piece {
+public class Queen extends ChessPiece {
 
-    public long getValidMoves(Board board, Color color, Spot spot)
+    public Queen(Color color)
+    {
+        super(color);
+    }
+
+    public long getValidMoves(Board board, Spot spot)
     {
         long rookBlockers = board.getPiece(ALL, BOTH) & ROOK_OCC_MASK[spot.ordinal()],
                 bishopBlockers = board.getPiece(ALL, BOTH) & BISHOP_OCC_MASK[spot.ordinal()];
@@ -21,6 +26,16 @@ public class Queen implements Piece {
                 bishopDBIndex = (int)((bishopBlockers * MAGIC_BISHOP_NUMBER[spot.ordinal()]) >>> MAGIC_BISHOP_SHIFT[spot.ordinal()]);
         return (MAGIC_ROOK_MOVE[spot.ordinal()][rookDBIndex] | MAGIC_BISHOP_MOVE[spot.ordinal()][bishopDBIndex])
                 & ~board.getPiece(ALL, color);
+    }
+
+    public int getBitBoardIndex()
+    {
+        return this.color.equals(WHITE) ? 4 : 10;
+    }
+
+    @Override
+    public String toString() {
+        return this.color + "Q";
     }
 
 }
