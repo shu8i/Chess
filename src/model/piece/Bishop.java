@@ -15,6 +15,7 @@ public class Bishop extends ChessPiece {
     public Bishop(Color color)
     {
         super(color);
+        type = BISHOP;
     }
 
     public long getValidMoves(long[] positions, Spot spot)

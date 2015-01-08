@@ -14,6 +14,7 @@ import static model.constants.Piece.ALL;
 public abstract class ChessPiece {
 
     protected Color color;
+    protected Piece type;
 
     public ChessPiece(Color color) {
         this.color = color;
@@ -25,7 +26,12 @@ public abstract class ChessPiece {
                 ? positions[ 12 + color.ordinal() ]
                 : positions[ color.ordinal() * 6 + piece.ordinal() ];
     }
-    
+
+    public Piece getType()
+    {
+        return this.type;
+    }
+
     public abstract long getValidMoves(long[] positions, Spot origin);
     public abstract int getBitBoardIndex();
 

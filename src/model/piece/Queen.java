@@ -16,6 +16,7 @@ public class Queen extends ChessPiece {
     public Queen(Color color)
     {
         super(color);
+        type = QUEEN;
     }
 
     public long getValidMoves(long[] positions, Spot spot)

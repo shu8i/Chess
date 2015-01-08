@@ -17,6 +17,7 @@ public class Rook extends ChessPiece {
     public Rook(Color color)
     {
         super(color);
+        type = ROOK;
     }
 
     public long getValidMoves(long[] positions, Spot spot)

@@ -16,6 +16,7 @@ public class King extends ChessPiece {
     public King(Color color)
     {
         super(color);
+        type = KING;
     }
 
     public long getValidMoves(long[] positions, Spot spot)
