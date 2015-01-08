@@ -212,7 +212,7 @@ public class Board {
         int from = Math.min(origin.ordinal(), attacker.ordinal()),
                 to = Math.max(origin.ordinal(), attacker.ordinal());
         int difference = to - from;
-        boolean isRook = difference % 8 == 0 || difference < 8;
+        boolean isRook = difference % 8 == 0 || (to / 8 == from / 8);
         long ray = 0L;
         int increment;
 
